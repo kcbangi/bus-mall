@@ -74,7 +74,7 @@ function newImage() {
 }
 
 function onClick(event) {
-  console.log('here');
+  console.log('click');
   console.log(event);
   clicker++;
 
