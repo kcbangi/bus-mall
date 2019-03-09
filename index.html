@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Bus Mall</title>
-</head>
+    <head>
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>Bus Mall</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    </head>
 
-<body>
-    <header>
-        <h1>Bus Mall</h1>
-        <p> Pick an image</p>
-    </header>
+    <body>
+        <header>
+            <h1>Bus Mall</h1>
+            <p> Pick an image</p>
+        </header>
+        
+        <section id = "clickerBox"></section>
 
-    <section id = "clickerBox"></section>
-    
-    <ul id="voteResult"></ul>
+        <ul id="voteResult"></ul>
 
-</body>
+        <canvas id = "voteChart"></canvas>
 
-<footer>
-    <h2>Result</h2>
-    <script src="js/app.js"></script>
-</footer>
+        
+
+    </body>
+
+    <footer>
+        <script src="js/app.js"></script>
+    </footer>
+
 </html>

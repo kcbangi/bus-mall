@@ -8,9 +8,10 @@ var sectionElement = document.getElementById('clickerBox');
 var listResult = document.getElementById('voteResult');
 
 var images = [];
-var clicker = 0;
 var previousImage = [];
-
+var imageName = [];
+var clickedPerImage = [];
+var clicker = 0;
 
 new Images('./img/bag.jpg', 'Bag');
 new Images('./img/banana.jpg', 'Banana');
@@ -37,7 +38,9 @@ function Images(url, name) {
   this.name = name;
   this.url = url;
   this.numberOfClicks = 0;
+  this.displayed = 0;
   images.push(this);
+  imageName.push(this.name);
 }
 
 function randomImage() {
@@ -55,13 +58,16 @@ function newImage() {
     var index2 = randomImage();
   }
   imgZero.src = images[index0].url;
-  imgZero.alt = images[index0].name;
-
   imgOne.src = images[index1].url;
-  imgOne.alt = images[index1].name;
-
   imgTwo.src = images[index2].url;
+  
+  imgZero.alt = images[index0].name;
+  imgOne.alt = images[index1].name;
   imgTwo.alt = images[index2].name;
+
+  images[index0].displayed++;
+  images[index1].displayed++;
+  images[index2].displayed++;
 
   sectionElement.appendChild(imgZero);
   sectionElement.appendChild(imgOne);
@@ -88,6 +94,8 @@ function onClick(event) {
     console.log('maxVotes');
     sectionElement.removeEventListener('click', onClick);
     render();
+    votes();
+    chart();
   }
   newImage();
 }
@@ -100,6 +108,41 @@ function render() {
   }
 }
 
-sectionElement.addEventListener('click', onClick);
+function votes() {
+  for (var i in images) {
+    clickedPerImage.push(images[i].numberOfClicks);
+  }
+}
 
+function chart (){
+  var ctx = document. getElementById('voteChart').getContext('2d');
+  var chartColors = ['#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444'];
+  var barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: imageName,
+      datasets: [{
+        label: 'Vote Result',
+        data: clickedPerImage,
+        backgroundColor: chartColors,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          }
+        }]
+      }
+    }
+  });
+}
+
+sectionElement.addEventListener('click', onClick);
 newImage();
