@@ -20,8 +20,10 @@ img {
 #clickerBox {
     text-align: center;
 }
-
 #voteResult {
     color: #999;
     margin: 40px 50px;
+}
+img {
+    height: 350px;
 }
