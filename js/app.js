@@ -60,7 +60,7 @@ function newImage() {
   imgZero.src = images[index0].url;
   imgOne.src = images[index1].url;
   imgTwo.src = images[index2].url;
-  
+
   imgZero.alt = images[index0].name;
   imgOne.alt = images[index1].name;
   imgTwo.alt = images[index2].name;
@@ -91,11 +91,12 @@ function onClick(event) {
   }
 
   if (clicker === 25) {
-    console.log('maxVotes');
+    console.log('Maximum Votes');
     sectionElement.removeEventListener('click', onClick);
     render();
     votes();
     chart();
+    data();
   }
   newImage();
 }
@@ -114,7 +115,22 @@ function votes() {
   }
 }
 
-function chart (){
+function data() {
+  var collectedData = [];
+  console.log(localStorage.storageContent);
+  if (localStorage.storageContent) {
+    console.log('localStorage');
+    for (var i in clickedPerImage) {
+      collectedData[i] = clickedPerImage[i] + JSON.parse(localStorage.storageContent)[i];
+    }
+  }else {
+    console.log('No localStorage');
+    collectedData = clickedPerImage;
+  }
+  localStorage.storageContent = JSON.stringify(collectedData);
+}
+
+function chart() {
   var ctx = document. getElementById('voteChart').getContext('2d');
   var chartColors = ['#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444', '#999', '#444'];
   var barChart = new Chart(ctx, {
@@ -123,7 +139,7 @@ function chart (){
       labels: imageName,
       datasets: [{
         label: 'Vote Result',
-        data: clickedPerImage,
+        data: JSON.parse(localStorage.storageContent),
         backgroundColor: chartColors,
       }]
     },
